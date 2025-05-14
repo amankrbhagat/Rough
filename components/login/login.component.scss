@@ -1,0 +1,248 @@
+// .login-container {
+//   display: flex;
+//   justify-content: center;
+//   margin-top: 40px;
+// }
+
+// .login-box {
+//   background-color: white;
+//   padding: 32px;
+//   border-radius: 8px;
+//   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+//   width: 400px;
+// }
+
+// h2 {
+//   font-size: 24px;
+//   font-weight: bold;
+//   margin-bottom: 16px;
+//   text-align: center;
+// }
+
+// .full-width {
+//   width: 100%;
+// }
+
+// .form-group {
+//   margin-bottom: 16px;
+// }
+
+// .button-group {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-top: 16px;
+// }
+
+// .error-message {
+//   color: red;
+//   font-size: 13px;
+//   margin-top: 4px;
+// }
+
+
+
+// /* Center the login box with a nice background */
+// .login-container {
+//   display: flex;
+//   justify-content: center;
+//   align-items: center;
+//   min-height: 100vh;
+//   background: linear-gradient(to right, #f3f4f6, #e0e7ff);
+//   padding: 20px;
+// }
+
+// /* Main box styling */
+// .login-box {
+//   background-color: #ffffff;
+//   padding: 40px 32px;
+//   border-radius: 12px;
+//   box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+//   width: 100%;
+//   max-width: 400px;
+//   transition: transform 0.3s ease;
+// }
+
+// .login-box:hover {
+//   transform: translateY(-3px);
+// }
+
+// /* Headline */
+// h2 {
+//   font-size: 28px;
+//   font-weight: 700;
+//   margin-bottom: 24px;
+//   text-align: center;
+//   color: #333;
+// }
+
+// /* Full width form fields */
+// .full-width {
+//   width: 100%;
+// }
+
+// /* Field wrapper */
+// .form-group {
+//   margin-bottom: 20px;
+// }
+
+// /* Error messages */
+// .error-message {
+//   color: #e53935;
+//   font-size: 13px;
+//   margin-top: 4px;
+// }
+
+// /* Button group layout */
+// .button-group {
+//   display: flex;
+//   justify-content: space-between;
+//   align-items: center;
+//   margin-top: 24px;
+// }
+
+// /* Button hover effects */
+// button[mat-raised-button] {
+//   min-width: 100px;
+//   transition: background-color 0.3s ease, transform 0.2s ease;
+// }
+
+// button[mat-raised-button]:hover {
+//   background-color: #1565c0;
+//   transform: translateY(-1px);
+// }
+
+// button[mat-button] {
+//   font-size: 14px;
+//   text-transform: none;
+//   transition: color 0.3s ease;
+// }
+
+// button[mat-button]:hover {
+//   color: #1e88e5;
+// }
+
+// /* Responsive adjustments */
+// @media (max-width: 480px) {
+//   .login-box {
+//     padding: 24px 20px;
+//   }
+
+//   h2 {
+//     font-size: 24px;
+//   }
+
+//   .button-group {
+//     flex-direction: column;
+//     gap: 12px;
+//   }
+
+//   button[mat-raised-button],
+//   button[mat-button] {
+//     width: 100%;
+//   }
+// }
+
+
+
+/* Container just below navbar */
+.login-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  padding: 80px 20px 40px; // Space below navbar
+  min-height: calc(100vh - 60px); // Adjust to navbar height
+  background-image: url('/assets/images/login-bg.jpg'); // Path to your background image
+  background-size: cover;
+  background-position: center;
+  background-repeat: no-repeat;
+  backdrop-filter: blur(2px);
+}
+
+/* Semi-transparent form container for better contrast */
+.login-box {
+  background-color: rgba(255, 255, 255, 0.95); // Slight transparency
+  padding: 40px 32px;
+  border-radius: 12px;
+  box-shadow: 0 12px 24px rgba(0, 0, 0, 0.1);
+  width: 100%;
+  max-width: 400px;
+  transition: transform 0.3s ease;
+}
+
+.login-box:hover {
+  transform: translateY(-3px);
+}
+
+/* Headline */
+h2 {
+  font-size: 28px;
+  font-weight: 700;
+  margin-bottom: 24px;
+  text-align: center;
+  color: #333;
+}
+
+/* Full width form fields */
+.full-width {
+  width: 100%;
+}
+
+.form-group {
+  margin-bottom: 20px;
+}
+
+.error-message {
+  color: #e53935;
+  font-size: 13px;
+  margin-top: 4px;
+}
+
+/* Buttons */
+.button-group {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 24px;
+}
+
+button[mat-raised-button] {
+  min-width: 100px;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+button[mat-raised-button]:hover {
+  background-color: #1565c0;
+  transform: translateY(-1px);
+}
+
+button[mat-button] {
+  font-size: 14px;
+  text-transform: none;
+  transition: color 0.3s ease;
+}
+
+button[mat-button]:hover {
+  color: #1e88e5;
+}
+
+/* Responsive */
+@media (max-width: 480px) {
+  .login-box {
+    padding: 24px 20px;
+  }
+
+  h2 {
+    font-size: 24px;
+  }
+
+  .button-group {
+    flex-direction: column;
+    gap: 12px;
+  }
+
+  button[mat-raised-button],
+  button[mat-button] {
+    width: 100%;
+  }
+}

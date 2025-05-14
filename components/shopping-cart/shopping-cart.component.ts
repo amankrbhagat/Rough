@@ -1,13 +1,14 @@
 import { Component, inject } from '@angular/core';
 import { CartService } from '../../services/cart.service';
 import { Product } from '../../types/product';
-import { FormBuilder, FormsModule, ReactiveFormsModule } from '@angular/forms';
+import { FormBuilder, FormsModule, ReactiveFormsModule, Validators } from '@angular/forms';
 import { MatInputModule } from '@angular/material/input';
 import { MatButtonModule } from '@angular/material/button';
 import { MatRadioModule } from '@angular/material/radio';
 import { OrderService } from '../../services/order.service';
 import { Order } from '../../types/order';
 import { Router } from '@angular/router';
+import { ChangeDetectorRef } from '@angular/core'; // Enables UI updates
 
 @Component({
   selector: 'app-shopping-cart',
@@ -24,9 +25,18 @@ import { Router } from '@angular/router';
 })
 export class ShoppingCartComponent {
   cartService = inject(CartService);
+  formbuilder = inject(FormBuilder);
+  orderService = inject(OrderService);
+  router = inject(Router);
+  cdr = inject(ChangeDetectorRef); // Enables manual UI updates
+
+  orderStep: number = 0;
+  paymentType = 'cash';
+
   ngOnInit() {
     this.cartService.init();
   }
+
   get cartItems() {
     return this.cartService.items;
   }
@@ -34,48 +44,59 @@ export class ShoppingCartComponent {
   sellingPrice(product: Product) {
     return Math.round(product.price - (product.price * product.discount) / 100);
   }
+
   addToCart(productId: string, quantity: number) {
-    this.cartService.addToCart(productId, quantity).subscribe((result) => {
+    this.cartService.addToCart(productId, quantity).subscribe(() => {
       this.cartService.init();
+      this.cdr.detectChanges(); // Ensures UI updates dynamically
     });
   }
-  get totalAmmount() {
-    let ammount = 0;
-    for (let index = 0; index < this.cartItems.length; index++) {
-      const element = this.cartItems[index];
-      ammount += this.sellingPrice(element.product) * element.quantity;
-    }
-    return ammount;
+
+  get totalAmmount(): number {
+    return this.cartItems.reduce((sum, item) => {
+      return sum + this.sellingPrice(item.product) * item.quantity;
+    }, 0);
   }
-  orderStep: number = 0;
-  formbuilder = inject(FormBuilder);
-  paymentType = 'cash';
+
   addressForm = this.formbuilder.group({
-    address1: [''],
-    address2: [''],
-    city: [''],
-    pincode: [''],
+    address1: ['', [Validators.required]],
+    address2: ['', [Validators.required]],
+    city: ['', [Validators.required, Validators.pattern('^[A-Za-z\\s]+$')]],//VALIDATION DONE
+    pincode: ['', [Validators.required, Validators.pattern('^[0-9]{6}$')]], // Only accepts 6-digit numbers
   });
-  checkout() {
-    this.orderStep = 1;
+
+  get pincodeError() {
+    const control = this.addressForm.get('pincode');
+    if (control?.hasError('required')) return 'Pincode is required.';
+    if (control?.hasError('pattern')) return 'Enter a valid 6-digit number.';
+    return '';
   }
+
+  checkout() {
+    if (this.totalAmmount > 0) {
+      this.orderStep = 1;
+    }
+  }
+
   addAddress() {
     this.orderStep = 2;
   }
-  orderService = inject(OrderService);
-  router = inject(Router);
+
   completeOrder() {
-    let order: Order = {
-      items: this.cartItems,
-      paymentType: this.paymentType,
-      address: this.addressForm.value,
-      date: new Date(),
-    };
-    this.orderService.addOrder(order).subscribe((result) => {
-      alert('Your order is completed');
-      this.cartService.init();
-      this.orderStep = 0;
-      this.router.navigateByUrl('/orders');
-    });
+    if (this.addressForm.valid) {
+      let order: Order = {
+        items: this.cartItems,
+        paymentType: this.paymentType,
+        address: this.addressForm.value,
+        date: new Date(),
+      };
+      this.orderService.addOrder(order).subscribe(() => {
+        alert('Your order is completed');
+        this.cartService.init();
+        this.orderStep = 0;
+        this.router.navigateByUrl('/orders');
+        this.cdr.detectChanges(); // Ensures UI refresh after order completion
+      });
+    }
   }
 }

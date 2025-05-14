@@ -5,6 +5,8 @@ import { RouterLink } from '@angular/router';
 import { MatIconModule } from '@angular/material/icon';
 import { WishlistService } from '../../services/wishlist.service';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-product-card',
@@ -14,6 +16,7 @@ import { CartService } from '../../services/cart.service';
   styleUrl: './product-card.component.scss',
 })
 export class ProductCardComponent {
+  authService = inject(AuthService);  //EDIT
   @Input() product!: Product;
   wishlistService = inject(WishlistService);
   get sellingPrice() {

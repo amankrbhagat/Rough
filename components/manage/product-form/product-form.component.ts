@@ -102,3 +102,4 @@ export class ProductFormComponent {
     return this.productForm.get('images') as FormArray;
   }
 }
+

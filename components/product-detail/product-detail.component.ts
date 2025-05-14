@@ -7,6 +7,8 @@ import { ProductCardComponent } from '../product-card/product-card.component';
 import { WishlistService } from '../../services/wishlist.service';
 import { MatIcon, MatIconModule } from '@angular/material/icon';
 import { CartService } from '../../services/cart.service';
+import { AuthService } from '../../services/auth.service';
+
 
 @Component({
   selector: 'app-product-detail',
@@ -18,6 +20,8 @@ import { CartService } from '../../services/cart.service';
 export class ProductDetailComponent {
   customerService = inject(CustomerService);
   route = inject(ActivatedRoute);
+  authService = inject(AuthService);  //EDIT
+  
   product!: Product;
   mainImage!: string;
   similarProducts: Product[] = [];
